@@ -12,18 +12,21 @@
 #include <functional>
 
 #include "storage/ConfigStorage.h"
+#include "credentials.h"
+
+#ifndef CREDENTIALS_H
+    #ifndef WIFI_SSID
+    #define WIFI_SSID "WIFI_SSID_HERE"
+    #endif
+
+    #ifndef WIFI_PASS
+    #define WIFI_PASS "WIFI_PASS_HERE"
+    #endif
+#endif // CREDENTIALS_H
 
 // #define MAIN_STA
 // #define MAIN_SOFT_AP
 #define MAIN_AP_STA
-
-#ifndef WIFI_SSID
-#define WIFI_SSID "WIFI_SSID_HERE"
-#endif
-
-#ifndef WIFI_PASS
-#define WIFI_PASS "WIFI_PASS_HERE"
-#endif
 
 #define AP_SSID "ESP32-Access-Point"
 #define AP_PASS "123456789"
