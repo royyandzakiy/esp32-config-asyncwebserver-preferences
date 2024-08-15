@@ -24,9 +24,9 @@
     #endif
 #endif // CREDENTIALS_H
 
-// #define MAIN_STA
-// #define MAIN_SOFT_AP
-#define MAIN_AP_STA
+// #define WIFI_MODE_STA
+// #define WIFI_MODE_AP
+#define WIFI_MODE_AP_STA
 
 #define AP_SSID "ESP32-Access-Point"
 #define AP_PASS "123456789"
@@ -41,6 +41,6 @@ class WebServer {
         AsyncWebServer * server;
 };
 
-void internetConnect();
-
 extern WebServer webServer;
+
+void internetConnect();

@@ -29,49 +29,6 @@ void WebServer::init()
   server->begin();
 }
 
-void internetConnect() {
-  
-#ifdef MAIN_STA
-    // STA Mode
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
-
-    if (WiFi.waitForConnectResult() != WL_CONNECTED)
-    {
-        Serial.printf("WiFi Failed!\n");
-        return;
-    }
-
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
-
-#elif defined(MAIN_SOFT_AP)
-    // AP Mode
-    // WiFi.mode(WIFI_AP);
-    WiFi.softAP(AP_SSID, AP_PASS);
-
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.softAPIP());
-#elif defined(MAIN_AP_STA)
-    WiFi.mode(WIFI_AP_STA);
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
-
-    if (WiFi.waitForConnectResult() != WL_CONNECTED)
-    {
-        Serial.printf("WiFi Failed!\n");
-        return;
-    }
-
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
-
-        WiFi.softAP(AP_SSID, AP_PASS);
-
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.softAPIP());
-#endif // MAIN_STA
-}
-
 void WebServer::notFound(AsyncWebServerRequest *request)
 {
     request->send(404, "text/plain", "Not found");
@@ -113,4 +70,51 @@ void WebServer::endPointRegister(AsyncWebServer *_server)
                                      "<br><a href=\"/\">Return to Home Page</a>"); });
 
     server->onNotFound(&WebServer::notFound);
+}
+
+/**
+ * internetConnect() is purposefully placed outside, expecting within
+ * a bigger codebase, the internetHandler or such would be within it's
+ * own class
+ */
+void internetConnect() {  
+#ifdef WIFI_MODE_STA
+    // STA Mode
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PASS);
+
+    if (WiFi.waitForConnectResult() != WL_CONNECTED)
+    {
+        Serial.printf("WiFi Failed!\n");
+        return;
+    }
+
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+
+#elif defined(WIFI_MODE_AP)
+    // AP Mode
+    // WiFi.mode(WIFI_AP);
+    WiFi.softAP(AP_SSID, AP_PASS);
+
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.softAPIP());
+#elif defined(WIFI_MODE_AP_STA)
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PASS);
+
+    if (WiFi.waitForConnectResult() != WL_CONNECTED)
+    {
+        Serial.printf("WiFi Failed!\n");
+        return;
+    }
+
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+
+        WiFi.softAP(AP_SSID, AP_PASS);
+
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.softAPIP());
+#endif // WIFI_MODE_STA
 }
